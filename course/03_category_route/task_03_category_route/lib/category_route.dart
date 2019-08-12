@@ -43,37 +43,47 @@ class CategoryRoute extends StatelessWidget {
     Colors.red,
   ];
 
+  //Custom Widget that returns CCategory Widget with Inkwell
+  Widget inkWellCategoryWidget(_icon, _widgetColor, _name) {
+    return Container(
+      child: InkWell(
+        splashColor: _widgetColor,
+        highlightColor: _widgetColor,
+        child: Category(_icon, _widgetColor, _name),
+      ),
+    );
+  }
+
+  Widget categoryListViewWidget(List<Widget> categories) {
+    return ListView.builder(
+      itemCount: _categoryNames.length,
+      itemBuilder: (BuildContext context, int index) {
+        return categories[index];
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: Create a list of the eight Categories, using the names and colors
     // from above. Use a placeholder icon, such as `Icons.cake` for each
     // Category. We'll add custom icons later.
 
+    final categories = <Category>[];
+
+    for (var i = 0; i < _categoryNames.length; i++) {
+      categories.add(
+        Category(Icons.group_add, _baseColors[i], _categoryNames[i]),
+      );
+    }
+
     // TODO: Create a list view of the Categories
     final listView = Container(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: ListView(
-          children: <Widget>[
-            InkWellCategoryWidget(
-                Icons.grid_on, _baseColors[0], _categoryNames[0]),
-            InkWellCategoryWidget(
-                Icons.grid_on, _baseColors[1], _categoryNames[1]),
-            InkWellCategoryWidget(
-                Icons.grid_on, _baseColors[2], _categoryNames[2]),
-            InkWellCategoryWidget(
-                Icons.grid_on, _baseColors[3], _categoryNames[3]),
-            InkWellCategoryWidget(
-                Icons.grid_on, _baseColors[4], _categoryNames[4]),
-            InkWellCategoryWidget(
-                Icons.grid_on, _baseColors[5], _categoryNames[5]),
-            InkWellCategoryWidget(
-                Icons.grid_on, _baseColors[6], _categoryNames[6]),
-            InkWellCategoryWidget(
-                Icons.grid_on, _baseColors[7], _categoryNames[7]),
-          ],
-        ),
+        child: categoryListViewWidget(categories),
       ),
+      color: _color,
     );
 
     // TODO: Create an App Bar
@@ -92,24 +102,6 @@ class CategoryRoute extends StatelessWidget {
       appBar: appBar,
       body: listView,
       backgroundColor: _color,
-    );
-  }
-}
-
-class InkWellCategoryWidget extends StatelessWidget {
-  final IconData icon;
-  final Color color;
-  final String catName;
-
-  @override
-  InkWellCategoryWidget(this.icon, this.color, this.catName);
-  Widget build(BuildContext context) {
-    return Container(
-      child: InkWell(
-        splashColor: this.color,
-        highlightColor: this.color,
-        child: Category(this.icon, this.color, this.catName),
-      ),
     );
   }
 }
