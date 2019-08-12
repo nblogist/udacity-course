@@ -5,6 +5,9 @@
 // To keep your imports tidy, follow the ordering guidelines at
 // https://www.dartlang.org/guides/language/effective-dart/style#ordering
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
+final _rowHeight = 100.0;
+final _borderRadius = BorderRadius.circular(_rowHeight/2);
 
 /// A custom [Category] widget.
 ///
@@ -19,8 +22,8 @@ class Category extends StatelessWidget {
   final IconData icon;
   final Color color;
   final String catName;
-  const Category(
-      @required this.icon, @required this.color, @required this.catName);
+  
+  const Category(@required this.icon, @required this.color, @required this.catName);
 
   /// Builds a custom widget that shows [Category] information.
   ///
@@ -33,34 +36,40 @@ class Category extends StatelessWidget {
 
   Widget build(BuildContext context) {
     // TODO: Build the custom widget here, referring to the Specs.
-    return InkWell(
-      splashColor: color,
-      highlightColor: color,
-      borderRadius: BorderRadius.circular(200),
-      onTap: (){
-        print('I was tapped!');
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Icon(
-                icon,
-                color: color,
-                size: 60,
+    return Material(
+      color: Colors.transparent,
+      child: Container(
+        height: _rowHeight,
+        child: InkWell(
+          splashColor: color,
+          highlightColor: color,
+          borderRadius: _borderRadius,
+          onTap: (){
+            print('I was tapped!');
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Icon(
+                    icon,
+                    color: color,
+                    size: 60,
+                  ),
+                ),
+                Center(
+                child : Text(
+                  catName,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 24),
+                ),
               ),
+              ],
             ),
-            Text(
-              catName,
-              style: TextStyle(fontSize: 24),
-            ),
-            Container(
-              height: 100,
-              width: 50,
-            ),
-          ],
+          ),
         ),
       ),
     );
