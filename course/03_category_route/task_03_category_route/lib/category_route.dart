@@ -96,6 +96,7 @@ class CategoryRoute extends StatelessWidget {
         style: Theme.of(context).textTheme.headline,
       ),
       elevation: 0,
+      centerTitle: true,
     );
 
     return Scaffold(
